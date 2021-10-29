@@ -17,7 +17,6 @@ type Co2DataOrigin struct {
 }
 
 type Co2Data struct {
-	Date time.Time
 	Time time.Time
 	Data int
 }
@@ -39,22 +38,20 @@ func main() {
 		cco2DataOrigin = append(cco2DataOrigin, co2DataOrigin)
 	}
 
-	var cc2Data []Co2Data
-
-	const format1 = "2020/01/01"
-	const format2 = "17:34:42"
+	var co2DataStructArr []Co2Data
 	for _, c := range cco2DataOrigin {
-		var co2Data Co2Data
-		var err error
-		co2Data.Date, err = time.Parse(format1, c.Date)
-		co2Data.Time, err = time.Parse(format2, c.Time)
-		co2Data.Data = c.Data
+		var co2DataStruct Co2Data
+		str1 := c.Date + " " + c.Time
+		time1, err := time.Parse("2006/01/02 15:04:05", str1)
 		if err != nil {
 			log.Println(err)
 		}
-	}
-	for _, c := range cc2Data {
-		fmt.Println(c.Date, c.Time, c.Data)
+		co2DataStruct.Time = time1
+		co2DataStruct.Data = c.Data
+		co2DataStructArr = append(co2DataStructArr, co2DataStruct)
 	}
 
+	for _, c := range co2DataStructArr {
+		fmt.Println(c.Time, c.Data)
+	}
 }
