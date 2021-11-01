@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"co2-sensor-web/parser"
 	"fmt"
 	"net/http"
 	"text/template"
@@ -9,7 +10,9 @@ import (
 var templates = template.Must(template.ParseFiles("app/views/google.html"))
 
 func viewChartHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "google.html", nil)
+	df := parser.SqlParser("co2ex.sqlite")
+
+	err := templates.ExecuteTemplate(w, "google.html", df)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
