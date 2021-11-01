@@ -10,7 +10,7 @@ import (
 var templates = template.Must(template.ParseFiles("app/views/google.html"))
 
 func viewChartHandler(w http.ResponseWriter, r *http.Request) {
-	df := parser.SqlParser("co2ex.sqlite")
+	df := parser.SqlParser("co2example.sqlite")
 
 	err := templates.ExecuteTemplate(w, "google.html", df)
 	if err != nil {
